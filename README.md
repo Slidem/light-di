@@ -39,7 +39,7 @@ There are 2 main annotations that will allow you to use dependency injection tog
 
 
 
-###### **@Component** annotation : 
+##### **@Component** annotation : 
 Marks this class as a managed bean by the framework. You have the option of
 making your component either a **singleton** or a **prototype**.
 
@@ -115,7 +115,7 @@ making your component either a **singleton** or a **prototype**.
     }
     ```
     
-###### **@Inject** annotation : 
+##### **@Inject** annotation : 
 
 The inject annotation allows you to inject managed components inside other components.
 The @Inject annotation can be applied to:
@@ -159,7 +159,7 @@ The @Inject annotation can be applied to:
       }
             
      }
-    ```
+   ```
     
 
 
