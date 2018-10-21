@@ -43,6 +43,11 @@ public class BeanInstanceHolderVisitor extends ClassHolderVisitor {
     }
 
     @Override
+    public void visit(ConstructorInjectClassHolder constructorInjectClassHolder) {
+        //do nothing
+    }
+
+    @Override
     public void visit(PrototypeFactoryClassHolder prototypeFactoryClassHolder) {
         //do nothing.
     }

@@ -1,5 +1,6 @@
 package ami.lightdi.beans.visitors.impl;
 
+import ami.lightdi.annotations.Component;
 import ami.lightdi.beans.BeanStore;
 import ami.lightdi.beans.classholders.impl.*;
 import ami.lightdi.beans.framework.PrototypeFactory;
@@ -8,6 +9,7 @@ import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Mihai Alexandru
@@ -26,7 +28,7 @@ public class BeanStoreInstanceVisitor extends ClassHolderVisitor {
 
     @Override
     public void visit(ListClassHolder listClassHolder) {
-        var subtypes = reflections.getSubTypesOf(listClassHolder.getGenericTypeClass());
+        var subtypes = reflections.getSubTypesOf(listClassHolder.getGenericTypeClass()).stream().filter(c -> c.isAnnotationPresent(Component.class)).collect(Collectors.toSet());
         boolean listDependenciesInitialized = subtypes.stream().map(beanStore::getBean).allMatch(Optional::isPresent);
         if (listDependenciesInitialized) {
             instance = new ArrayList<>(beanStore.getBeans(listClassHolder.getBeanClass()));
@@ -36,6 +38,11 @@ public class BeanStoreInstanceVisitor extends ClassHolderVisitor {
     @Override
     public void visit(FieldInjectNamedBeanClassHolder fieldInjectNamedBeanClassHolder) {
         instance = beanStore.getBean(fieldInjectNamedBeanClassHolder.getBeanName(), fieldInjectNamedBeanClassHolder.getBeanClass()).orElse(null);
+    }
+
+    @Override
+    public void visit(ConstructorInjectClassHolder constructorInjectClassHolder) {
+        instance = beanStore.getBean(constructorInjectClassHolder.getBeanClass()).orElse(null);
     }
 
     @Override

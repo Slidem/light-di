@@ -49,13 +49,19 @@ public class BeanDependenciesVisitor extends ClassHolderVisitor {
 
     @Override
     public void visit(FieldInjectNamedBeanClassHolder fieldInjectNamedBeanClassHolder) {
-        var subtypes = reflections.getSubTypesOf(fieldInjectNamedBeanClassHolder.getBeanClass());
+        var subtypes = getSubtypesIncludingActualType(fieldInjectNamedBeanClassHolder);
         dependencies = getSubTypesHolders(subtypes)
                 .stream()
                 .filter(st -> isSubtTypeNamedBean(st, fieldInjectNamedBeanClassHolder.getBeanName()))
                 .findFirst()
                 .map(Collections::singletonList)
                 .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public void visit(ConstructorInjectClassHolder constructorInjectClassHolder) {
+        var subtypes = getSubtypesIncludingActualType(constructorInjectClassHolder);
+        dependencies = getSubTypesHolders(subtypes);
     }
 
     @Override
@@ -93,6 +99,13 @@ public class BeanDependenciesVisitor extends ClassHolderVisitor {
     private boolean isSubtTypeNamedBean(ClassHolder classHolder, String beanName) {
         String subTypeBeanName = classHolder.getBeanClass().getAnnotation(Component.class).name();
         return Objects.equals(beanName, subTypeBeanName);
+    }
+
+    private Set<Class<?>> getSubtypesIncludingActualType(ClassHolder ch) {
+        Set<Class<?>> types = new HashSet<>();
+        types.add(ch.getBeanClass());
+        types.addAll(reflections.getSubTypesOf(ch.getBeanClass()));
+        return types;
     }
 
 

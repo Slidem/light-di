@@ -5,7 +5,6 @@ import ami.lightdi.annotations.Inject;
 import ami.lightdi.beans.classholders.ClassHolder;
 import ami.lightdi.beans.classholders.impl.*;
 import ami.lightdi.beans.framework.PrototypeFactory;
-import ami.lightdi.exceptions.BeanNotFoundException;
 import com.google.common.base.Strings;
 
 import java.lang.reflect.Constructor;
@@ -61,16 +60,15 @@ public class ClassHolderFactory {
         Type[] paramTypes = constructor.getGenericParameterTypes();
         for (Type type : paramTypes) {
             ClassHolder ch = null;
-            if (type instanceof Class) {
-                ch = getClassHolder((Class<?>) type).orElseThrow(() -> new BeanNotFoundException("Constructor required a bean of type: " + type + " but no annotated component found"));
-            } else if (listType(type)) {
+            if (listType(type)) {
                 ch = getClassHolder(type, ListClassHolder::new);
             } else if (objectFactoryType(type)) {
                 ch = getClassHolder(type, PrototypeFactoryClassHolder::new);
+            } else {
+                ch = new ConstructorInjectClassHolder((Class<?>) type);
             }
             ofNullable(ch).ifPresent(holders::add);
         }
-
         return holders;
     }
 

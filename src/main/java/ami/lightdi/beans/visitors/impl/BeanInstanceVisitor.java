@@ -58,6 +58,11 @@ public class BeanInstanceVisitor extends ClassHolderVisitor {
     }
 
     @Override
+    public void visit(ConstructorInjectClassHolder constructorInjectClassHolder) {
+        instanceSupplier = () -> beanStore.getBean(constructorInjectClassHolder.getBeanClass()).orElseThrow(() -> new BeanNotFoundException(constructorInjectClassHolder.getBeanClass().getSimpleName()));
+    }
+
+    @Override
     public void visit(NamedBeanClassHolder namedBeanClassVisitor) {
         initBean(namedBeanClassVisitor.getBeanClass());
     }

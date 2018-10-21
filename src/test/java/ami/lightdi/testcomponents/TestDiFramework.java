@@ -11,6 +11,7 @@ import ami.lightdi.testcomponents.packagee.PrototypeA;
 import ami.lightdi.testcomponents.packagee.PrototypeB;
 import ami.lightdi.testcomponents.packagee.singletons.SingletonA;
 import ami.lightdi.testcomponents.packagee.singletons.SingletonB;
+import ami.lightdi.testcomponents.packagef.DummyConstructorInjections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -154,6 +155,13 @@ public class TestDiFramework {
         assertNotSame(paA, paAA);
         assertNotSame(paB, paBB);
         assertNotSame(paA.getProtA(), paAA.getProtA());
+    }
+
+    @Test
+    public void testConstructorInjection() {
+        LightDI.init("ami.lightdi.testcomponents.packagef");
+        DummyConstructorInjections dummyConstructorInjections = LightDI.getBean(DummyConstructorInjections.class);
+        dummyConstructorInjections.toString();
     }
 
 

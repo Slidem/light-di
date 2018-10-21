@@ -19,6 +19,8 @@ public abstract class ClassHolderVisitor {
 
     public abstract void visit(FieldInjectNamedBeanClassHolder fieldInjectNamedBeanClassHolder);
 
+    public abstract void visit(ConstructorInjectClassHolder constructorInjectClassHolder);
+
     public abstract void visit(NamedBeanClassHolder namedBeanClassHolder);
 
     public abstract void visit(DefaultClassHolder defaultClassHolder);
