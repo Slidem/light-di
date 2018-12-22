@@ -53,8 +53,7 @@ public class BeanInstanceVisitor extends ClassHolderVisitor {
     @Override
     public void visit(FieldInjectNamedBeanClassHolder fieldInjectNamedBeanClassHolder) {
         String beanName = fieldInjectNamedBeanClassHolder.getBeanName();
-        Object instance = beanStore.getBean(beanName, fieldInjectNamedBeanClassHolder.getBeanClass()).orElseThrow(() -> new BeanNotFoundException(beanName));
-        instanceSupplier = () -> instance;
+        instanceSupplier = () -> beanStore.getBean(beanName, fieldInjectNamedBeanClassHolder.getBeanClass()).orElseThrow(() -> new BeanNotFoundException(beanName));
     }
 
     @Override
