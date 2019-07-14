@@ -161,9 +161,12 @@ The @Inject annotation can be applied to:
      }
    ```
     
+#### Scanning components
+
+ - Component scanning is performed by calling the static method `LightDI.init("com.package.a", "com.package.b")`
+ - If you want to programatticaly retrieve a managed component, you can use `LightDI.getBean()` method
 
 
 
 
-
-    
+ 
