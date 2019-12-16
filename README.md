@@ -1,6 +1,6 @@
 # Light DI framework
 
-### Description
+## Description
 
 This project is an attempt of creating a light dependency injection framework.
 
@@ -10,10 +10,10 @@ simple applications, without the necessity of using more "heavier" frameworks li
 Another reason behind the creation of such a framework was also to play arround with the concept of dependency injection, 
 and also with java 10 new features; ultimately it was for having fun and learning new stuff :).
 
-### How to use:
+## How to use:
 
 
-#### Maven dependency
+### Maven dependency
 The project uses maven. The dependency is not on maven central so, to use it you have to:
 - Download the project locally to you're dev environment.
 - Install the dependency to your local maven repository: `mvn clean install -U`;
@@ -26,12 +26,12 @@ The project uses maven. The dependency is not on maven central so, to use it you
 </dependency>
 ```
 
-#### Framework overview:
+### Framework overview:
 
 The framework allows you to mark your classes as beans managed by the framework, and allows you to inject
 those classes into other beans.
 
-##### Annotations:
+## Annotations:
 
 There are 2 main annotations that will allow you to use dependency injection together with this framework:
 - @Component
@@ -39,7 +39,7 @@ There are 2 main annotations that will allow you to use dependency injection tog
 
 
 
-##### **@Component** annotation : 
+#### **@Component** annotation : 
 Marks this class as a managed bean by the framework. You have the option of
 making your component either a **singleton** or a **prototype**.
 
@@ -115,7 +115,7 @@ making your component either a **singleton** or a **prototype**.
     }
     ```
     
-##### **@Inject** annotation : 
+#### **@Inject** annotation : 
 
 The inject annotation allows you to inject managed components inside other components.
 The @Inject annotation can be applied to:
@@ -161,7 +161,7 @@ The @Inject annotation can be applied to:
      }
    ```
     
-#### Scanning components
+## Scanning components
 
  - Component scanning is performed by calling the static method `LightDI.init("com.package.a", "com.package.b")`
  - If you want to programatticaly retrieve a managed component, you can use `LightDI.getBean()` method
